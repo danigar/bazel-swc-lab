@@ -1,0 +1,22 @@
+build --enable_runfiles
+
+# Definition of --config=engflow
+build:engflow --jobs=120
+build:engflow --host_javabase=@rbe_default//java:jdk
+build:engflow --javabase=@rbe_default//java:jdk
+build:engflow --java_runtime_version=remotejdk_11
+build:engflow --host_java_toolchain=@bazel_tools//tools/jdk:toolchain_java11
+build:engflow --action_env=BAZEL_DO_NOT_DETECT_CPP_TOOLCHAIN=1
+build:engflow --extra_execution_platforms=@rbe_default//config:platform
+build:engflow --host_platform=@rbe_default//config:platform
+build:engflow --platforms=@rbe_default//config:platform
+build:engflow --define=EXECUTOR=remote
+build:engflow --incompatible_strict_action_env=true
+build:engflow --remote_timeout=3600
+build:engflow --host_platform_remote_properties_override='properties:{name:"cache-silo-key" value:"1.3"}'
+build:engflow --google_default_credentials
+build:engflow --bes_backend=grpcs://quartz.cluster.engflow.com/
+build:engflow --bes_results_url=https://quartz.cluster.engflow.com/invocation/
+build:engflow --nojava_header_compilation
+
+build:engflow-local --config=engflow  --enable_runfiles --remote_executor=grpcs://quartz.cluster.engflow.com/ --cpu=k8 --host_cpu=k8

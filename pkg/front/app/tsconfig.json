@@ -1,0 +1,21 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+      "baseUrl": ".",
+      "declaration": true,
+      "preserveSymlinks": false,
+      "allowJs": true,
+      "composite": true,
+      "jsx": "preserve",
+      "sourceMap": true,
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "noEmit": false,
+      "target": "es2015",
+      "module": "esnext",
+      "moduleResolution": "node",
+      "lib": ["es2017", "dom"]
+    },
+    "exclude": ["node_modules", "tmp"]
+}
+  

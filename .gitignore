@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Bazel output directories
+bazel-bin
+bazel-out
+bazel-testlogs
+bazel-bazel-swc-lab
