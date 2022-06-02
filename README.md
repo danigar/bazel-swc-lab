@@ -2,7 +2,7 @@
 
 Repository to test RBE with `aspect-build/rules_swc`.
 
-## RBE
+## RBE
 
 Remote build execution is done by engflow service. This repo has the necessary config for spawning actions in remote executors although only authenticated masmovil users can send actions to RBE. 
 
@@ -23,7 +23,7 @@ Require stack:
 ```
 
 
-## Repro steps
+## Repro steps
 
 `bazel build //pkg/front/app --config=engflow-local` swc >= v0.5.0 --> KO - Fails with `Error: Cannot find module 'slash'`
 `bazel build //pkg/front/app` --> OK - Produce the expected outputs 
