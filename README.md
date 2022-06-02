@@ -26,5 +26,7 @@ Require stack:
 ## Repro steps
 
 `bazel build //pkg/front/app --config=engflow-local` swc >= v0.5.0 --> KO - Fails with `Error: Cannot find module 'slash'`
+
 `bazel build //pkg/front/app` --> OK - Produce the expected outputs 
+
 `bazel build //pkg/front/app --config=engflow-local` swc < v0.5.0 --> OK - Produce the expected outputs 
