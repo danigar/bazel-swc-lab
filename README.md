@@ -1,6 +1,6 @@
 # bazel-swc-lab
 
-Repository to test RBE with `aspect-build/rules_swc`.
+Repository to test RBE .
 
 ## RBE
 
@@ -10,23 +10,19 @@ The RBE config has been added for illustrative pourposes.
 
 ## Failure scenario
 
-Building typescript srcs using `ts_project` rule with swc transpiler fails in RBE mode since swc version `0.5.0` (also tested with the latest release `v0.7.0`). Local sandboxed execution is successfull.
+Building `pkg_web` target rule with fails in RBE mode. Local sandboxed execution is successfull.
 
 Prior to `v0.5.0`, swc RBE transpilation works just fine with the same config.
 
 The output stack trace of the error is:
 
 ```
-Error: Cannot find module 'slash'
-Require stack:
-- /var/lib/../exec/bazel-out/k8-opt-exec-EAxs2/bin/external/aspect_rules_swc/swc/node_modules/@swc/cli/lib/swc/dir.js
+bazel-out/k8-.../external/build_bazel_rules_nodejs/internal/pkg_web/assembler.sh: line 236: /private/var/tmp/_bazel/.../external/nodejs_linux_amd64/bin/nodejs/bin/node: cannot execute binary file
 ```
 
 
 ## Repro steps
 
-`bazel build //pkg/front/app --config=engflow-local` swc >= v0.5.0 --> KO - Fails with `Error: Cannot find module 'slash'`
+`bazel build //pkg/front/app:webapp --config=engflow-local` --> KO - Fails with `bin/nodejs/bin/node: cannot execute binary file`
 
-`bazel build //pkg/front/app` --> OK - Produce the expected outputs 
-
-`bazel build //pkg/front/app --config=engflow-local` swc < v0.5.0 --> OK - Produce the expected outputs 
+`bazel build //pkg/front/app:webapp` --> OK - Produce the expected outputs 
