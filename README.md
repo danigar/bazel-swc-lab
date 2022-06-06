@@ -1,4 +1,4 @@
-# bazel-swc-lab
+# bazel-lab
 
 Repository to test RBE .
 
@@ -12,7 +12,6 @@ The RBE config has been added for illustrative pourposes.
 
 Building `pkg_web` target rule with fails in RBE mode. Local sandboxed execution is successfull.
 
-Prior to `v0.5.0`, swc RBE transpilation works just fine with the same config.
 
 The output stack trace of the error is:
 
