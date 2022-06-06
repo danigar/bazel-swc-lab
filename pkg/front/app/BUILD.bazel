@@ -3,6 +3,8 @@ load("@npm//@aspect-build/webpack:index.bzl", "webpack_dev_server", "webpack_bun
 load("@npm//@bazel/esbuild:index.bzl", "esbuild", "esbuild_config")
 load("@npm//http-server:index.bzl", "http_server")
 load("@npm//@aspect-build/webpack:index.bzl", "webpack_bundle", "webpack_dev_server")
+load("@build_bazel_rules_nodejs//:index.bzl", "pkg_web")
+load("@npm//html-insert-assets:index.bzl", "html_insert_assets")
 
 ts_project(
     name = "app",
@@ -36,6 +38,28 @@ esbuild(
     splitting = False,
     deps = [":app"],
 )
+
+html_insert_assets(
+    name = "assets_index_html",
+    outs = ["index_.html"],
+    args = [
+        "--out=$@",
+        "--html=$(execpath index.html)",
+        "--roots=$(RULEDIR)",
+        "--scripts",
+        "--module",
+    ] + ["bundle.js"],
+    data = [ "index.html", "bundle" ],
+)
+
+pkg_web(
+    name = "webapp",
+    srcs = [
+        "assets_index_html",
+        "bundle"
+    ],
+)
+
 
 http_server(
     name = "server",

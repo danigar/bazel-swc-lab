@@ -95,14 +95,10 @@ yarn_install(
 
 http_archive(
     name = "aspect_rules_swc",
-    sha256 = "422126a732de2a858eb29ee24df6da29964bdd93c8b141e2f83a5119adf36686",
-    strip_prefix = "rules_swc-0.5.1",
-    url = "https://github.com/aspect-build/rules_swc/archive/refs/tags/v0.5.1.tar.gz",
+    sha256 = "206a89aae3a04831123b43962a3864e8ab1652b703c4af58d84b04174360137d",
+    strip_prefix = "rules_swc-0.4.0",
+    url = "https://github.com/aspect-build/rules_swc/archive/refs/tags/v0.4.0.tar.gz",
 )
-
-###################
-# rules_swc setup #
-###################
 
 # Fetches the rules_swc dependencies.
 # If you want to have a different version of some dependency,
@@ -110,29 +106,25 @@ http_archive(
 # Alternatively, you can skip calling this function, so long as you've
 # already fetched all the dependencies.
 load("@aspect_rules_swc//swc:dependencies.bzl", "rules_swc_dependencies")
-
 rules_swc_dependencies()
 
 # Fetches a pre-built Rust-node binding from
 # https://github.com/swc-project/swc/releases.
 # If you'd rather compile it from source, you can use rules_rust, fetch the project,
 # then register the toolchain yourself. (Note, this is not yet documented)
-# load("@aspect_rules_swc//swc:repositories.bzl", "LATEST_VERSION", "swc_register_toolchains")
 load("@aspect_rules_swc//swc:repositories.bzl", "swc_register_toolchains")
-
 swc_register_toolchains(
     name = "swc",
-    swc_version = "v1.2.168",
+    swc_version = "v1.2.141",
 )
 
+# Fetches a NodeJS interpreter, needed to run the swc CLI.
+# You can skip this if you already register a nodejs toolchain.
 load("@rules_nodejs//nodejs:repositories.bzl", "nodejs_register_toolchains")
 nodejs_register_toolchains(
     name = "node16",
     node_version = "16.9.0",
 )
 
-load("@aspect_bazel_lib//lib:repositories.bzl", "DEFAULT_YQ_VERSION", "register_yq_toolchains")
-
-register_yq_toolchains(
-    version = DEFAULT_YQ_VERSION,
-)
+load("@build_bazel_rules_nodejs//toolchains/esbuild:esbuild_repositories.bzl", "esbuild_repositories")
+esbuild_repositories(npm_repository = "npm")
